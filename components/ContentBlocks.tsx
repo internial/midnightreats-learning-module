@@ -2,6 +2,7 @@ import React, { useState } from 'react';
 import { ContentBlock } from '../types';
 import { LightbulbIcon, BookOpenIcon, CookieIcon, SearchCircleIcon } from './Icons';
 
+/** Renders a styled heading. */
 export const HeadingBlock: React.FC<{ content: string }> = ({ content }) => (
     <div className="flex items-center gap-3 mt-8 mb-4">
         <BookOpenIcon className="h-7 w-7 text-brand-blue flex-shrink-0" />
@@ -9,10 +10,12 @@ export const HeadingBlock: React.FC<{ content: string }> = ({ content }) => (
     </div>
 );
 
+/** Renders a styled paragraph. */
 export const ParagraphBlock: React.FC<{ content: string }> = ({ content }) => (
     <p className="text-gray-700 dark:text-gray-300 leading-relaxed mb-4">{content}</p>
 );
 
+/** Renders a styled bulleted list. */
 export const ListBlock: React.FC<{ items: string[] }> = ({ items }) => (
     <ul className="space-y-3 mb-4 text-gray-700 dark:text-gray-300">
         {items.map((item, index) => (
@@ -24,6 +27,7 @@ export const ListBlock: React.FC<{ items: string[] }> = ({ items }) => (
     </ul>
 );
 
+/** Renders a styled scenario block. */
 export const ScenarioBlock: React.FC<{ content: { title: string; body: string } }> = ({ content }) => (
     <div className="bg-yellow-50 dark:bg-gray-800/50 border-l-4 border-yellow-400 p-4 rounded-r-lg my-6">
         <div className="flex items-center gap-3">
@@ -34,6 +38,7 @@ export const ScenarioBlock: React.FC<{ content: { title: string; body: string } 
     </div>
 );
 
+/** Renders an interactive, collapsible content block. */
 export const ClickToRevealBlock: React.FC<{ content: { title: string; body: string } }> = ({ content }) => {
     const [isOpen, setIsOpen] = useState(false);
     return (
@@ -54,6 +59,12 @@ export const ClickToRevealBlock: React.FC<{ content: { title: string; body: stri
     );
 };
 
+/**
+ * A factory function that takes a content block object and returns the corresponding React component.
+ * @param {ContentBlock} block The content block data.
+ * @param {number} index The index for the React key.
+ * @returns {React.ReactElement | null} The rendered component or null if the type is unknown.
+ */
 export const renderContentBlock = (block: ContentBlock, index: number) => {
     switch (block.type) {
         case 'heading':

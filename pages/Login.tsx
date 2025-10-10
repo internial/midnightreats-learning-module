@@ -1,13 +1,20 @@
 import React, { useState } from 'react';
 import { User, UserProgress } from '../types';
 import { MODULES } from '../data/trainingData';
-import { UserIcon, MailIcon, IdentificationIcon } from '../components/Icons';
+import { UserIcon, MailIcon, IdentificationIcon, LogoIcon, ThemeToggle } from '../components/Icons';
 
 interface LoginProps {
   onLogin: (user: User) => void;
   savedUser: User | null;
+  theme: 'light' | 'dark';
+  setTheme: (theme: 'light' | 'dark') => void;
 }
 
+/**
+ * Creates the initial progress object for a new user.
+ * The first module is set to 'ready', and all others are 'locked'.
+ * @returns {UserProgress} The initial user progress object.
+ */
 const initializeProgress = (): UserProgress => {
   const progress: UserProgress = {};
   MODULES.forEach((module, index) => {
@@ -20,11 +27,17 @@ const initializeProgress = (): UserProgress => {
   return progress;
 };
 
-const Login: React.FC<LoginProps> = ({ onLogin, savedUser }) => {
+/**
+ * Login page component.
+ * Handles new user creation and allows returning users to continue their session.
+ */
+const Login: React.FC<LoginProps> = ({ onLogin, savedUser, theme, setTheme }) => {
+  // State for user input fields
   const [name, setName] = useState('');
   const [email, setEmail] = useState('');
   const [employeeId, setEmployeeId] = useState('');
 
+  /** Handles the form submission to create and log in a new user. */
   const handleSubmit = (e: React.FormEvent) => {
     e.preventDefault();
     if (name && email && employeeId) {
@@ -40,11 +53,14 @@ const Login: React.FC<LoginProps> = ({ onLogin, savedUser }) => {
   };
 
   return (
-    <div className="min-h-screen flex items-center justify-center bg-brand-light dark:bg-brand-dark p-4 font-sans">
+    <div className="min-h-screen flex items-center justify-center bg-brand-light dark:bg-brand-dark p-4 font-sans relative">
+      <div className="absolute top-4 right-4">
+        <ThemeToggle theme={theme} setTheme={setTheme} />
+      </div>
       <div className="w-full max-w-md">
         <div className="text-center mb-8">
-            <img src="https://storage.googleapis.com/aai-web-samples/prompt-images/51352e67-d867-4e94-a957-a36c92d54e4f.png" alt="Midnight Treats Logo" className="w-48 inline-block" />
-            <p className="text-brand-blue mt-4 text-lg">New Hire Onboarding</p>
+            <LogoIcon className="w-32 h-32 text-brand-blue mx-auto" />
+            <h1 className="text-brand-blue mt-4 text-2xl font-semibold">New Hire Onboarding</h1>
         </div>
 
         <div className="bg-brand-off-white dark:bg-brand-night shadow-2xl rounded-xl p-8">
@@ -81,6 +97,7 @@ const Login: React.FC<LoginProps> = ({ onLogin, savedUser }) => {
               Start Training
             </button>
           </form>
+          {/* "Continue as" button appears if there's a recent user in localStorage */}
           {savedUser && (
             <>
               <div className="my-6 flex items-center">

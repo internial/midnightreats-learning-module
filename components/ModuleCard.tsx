@@ -9,9 +9,14 @@ interface ModuleCardProps {
   onClick: () => void;
 }
 
+/**
+ * A card component that displays information about a single training module.
+ * It shows the module's title, description, and current status (locked, ready, or completed).
+ */
 const ModuleCard: React.FC<ModuleCardProps> = ({ module, status, score, onClick }) => {
   const isLocked = status === 'locked';
 
+  /** Renders the appropriate icon and text based on the module's status. */
   const statusIndicator = () => {
     switch (status) {
       case 'completed':
@@ -39,6 +44,7 @@ const ModuleCard: React.FC<ModuleCardProps> = ({ module, status, score, onClick 
     }
   };
   
+  // Dynamically sets card classes for styling and interaction based on lock status.
   const cardClasses = `
     bg-brand-off-white dark:bg-brand-night rounded-xl p-6 flex flex-col justify-between h-full
     transition-all duration-300 ease-in-out transform shadow-md dark:shadow-none

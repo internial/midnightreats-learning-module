@@ -2,7 +2,7 @@ import React from 'react';
 import { User } from '../types';
 import { MODULES } from '../data/trainingData';
 import ModuleCard from '../components/ModuleCard';
-import { LogoutIcon, SunIcon, MoonIcon } from '../components/Icons';
+import { LogoutIcon, ThemeToggle } from '../components/Icons';
 
 interface DashboardProps {
   user: User;
@@ -13,6 +13,7 @@ interface DashboardProps {
   setTheme: (theme: 'light' | 'dark') => void;
 }
 
+/** A simple component to display user initials as an avatar. */
 const Avatar: React.FC<{ name: string }> = ({ name }) => {
     const initials = name.split(' ').map(n => n[0]).join('').toUpperCase();
     return (
@@ -22,16 +23,12 @@ const Avatar: React.FC<{ name: string }> = ({ name }) => {
     );
 };
 
-const ThemeToggle: React.FC<{ theme: 'light' | 'dark'; setTheme: (theme: 'light' | 'dark') => void; }> = ({ theme, setTheme }) => {
-    return (
-        <button onClick={() => setTheme(theme === 'light' ? 'dark' : 'light')} className="p-2 rounded-full bg-gray-200 dark:bg-gray-700 text-gray-500 dark:text-gray-400 hover:text-brand-blue dark:hover:text-brand-blue transition-colors">
-            {theme === 'light' ? <MoonIcon className="h-6 w-6" /> : <SunIcon className="h-6 w-6" />}
-        </button>
-    );
-};
-
-
+/**
+ * The main dashboard page for the logged-in user.
+ * Displays user info, overall progress, and a grid of training modules.
+ */
 const Dashboard: React.FC<DashboardProps> = ({ user, onSelectModule, onLogout, onViewCertificate, theme, setTheme }) => {
+  // Calculate overall training progress
   const completedModules = Object.values(user.progress).filter(p => p.status === 'completed').length;
   const totalModules = MODULES.length;
   const overallProgress = totalModules > 0 ? Math.round((completedModules / totalModules) * 100) : 0;
@@ -67,6 +64,7 @@ const Dashboard: React.FC<DashboardProps> = ({ user, onSelectModule, onLogout, o
           </div>
         </div>
         
+        {/* Congratulatory message and certificate button shown upon completion */}
         {allModulesCompleted && (
           <div className="bg-green-100 dark:bg-green-900/50 border border-green-300 dark:border-green-500 text-green-800 dark:text-green-300 rounded-xl p-6 mb-8 text-center shadow-lg">
             <h2 className="text-2xl font-bold mb-2">Congratulations!</h2>

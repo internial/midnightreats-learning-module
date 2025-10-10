@@ -7,20 +7,29 @@ interface QuizProps {
   attemptsLeft: number;
   onQuizComplete: (score: number) => void;
   onRetry: () => void;
+  nextModuleId: string | null;
+  onStartNextModule: (moduleId: string) => void;
 }
 
-const Quiz: React.FC<QuizProps> = ({ module, attemptsLeft, onQuizComplete, onRetry }) => {
+/**
+ * Renders an interactive quiz for a given module.
+ * Manages question state, answer selection, scoring, and results display.
+ */
+const Quiz: React.FC<QuizProps> = ({ module, attemptsLeft, onQuizComplete, onRetry, nextModuleId, onStartNextModule }) => {
+  // State for tracking quiz progress
   const [currentQuestionIndex, setCurrentQuestionIndex] = useState(0);
   const [selectedAnswer, setSelectedAnswer] = useState<string | null>(null);
   const [isAnswered, setIsAnswered] = useState(false);
   const [correctAnswers, setCorrectAnswers] = useState(0);
   const [showResults, setShowResults] = useState(false);
   
+  // Derived state values
   const currentQuestion = module.quiz.questions[currentQuestionIndex];
   const isCorrect = selectedAnswer === currentQuestion.answer;
   const score = Math.round((correctAnswers / module.quiz.questions.length) * 100);
   const passed = score >= module.quiz.passingScore;
 
+  /** Handles the submission of an answer. */
   const handleAnswer = () => {
     if (selectedAnswer === null) return;
     setIsAnswered(true);
@@ -29,6 +38,7 @@ const Quiz: React.FC<QuizProps> = ({ module, attemptsLeft, onQuizComplete, onRet
     }
   };
 
+  /** Moves to the next question or shows the results. */
   const handleNext = () => {
     if (currentQuestionIndex < module.quiz.questions.length - 1) {
       setCurrentQuestionIndex(prev => prev + 1);
@@ -40,19 +50,24 @@ const Quiz: React.FC<QuizProps> = ({ module, attemptsLeft, onQuizComplete, onRet
     }
   };
   
+  /** Determines the CSS class for an answer button based on its state. */
   const getButtonClass = (option: string) => {
     if (!isAnswered) {
         return 'bg-gray-200 dark:bg-gray-700 hover:bg-gray-300 dark:hover:bg-gray-600';
     }
+    // Correct answer style
     if (option === currentQuestion.answer) {
         return 'bg-green-100 dark:bg-green-500/50 border-green-500';
     }
+    // Incorrectly selected answer style
     if (option === selectedAnswer && option !== currentQuestion.answer) {
         return 'bg-red-100 dark:bg-red-500/50 border-red-500';
     }
+    // Default style for other options after an answer is submitted
     return 'bg-gray-200 dark:bg-gray-700 opacity-60 dark:opacity-50';
   };
 
+  // Render the results screen when the quiz is finished
   if (showResults) {
     return (
       <div className="text-center p-8 bg-brand-off-white dark:bg-brand-night rounded-lg">
@@ -66,18 +81,24 @@ const Quiz: React.FC<QuizProps> = ({ module, attemptsLeft, onQuizComplete, onRet
         {!passed && attemptsLeft > 0 && (
           <p className="text-yellow-600 dark:text-yellow-400 mb-6">You have {attemptsLeft} {attemptsLeft === 1 ? 'attempt' : 'attempts'} remaining.</p>
         )}
-        <div className="flex justify-center gap-4">
+        <div className="flex justify-center gap-4 flex-wrap">
             {!passed && attemptsLeft > 0 && (
                  <button onClick={onRetry} className="bg-brand-blue hover:bg-brand-blue-dark text-white font-bold py-2 px-6 rounded-lg transition-colors">
                     Retry Quiz
                 </button>
             )}
-            <p className="text-sm text-gray-500 dark:text-gray-400 mt-4">Close this module to return to the dashboard.</p>
+             {passed && nextModuleId && (
+                <button onClick={() => onStartNextModule(nextModuleId)} className="bg-green-500 hover:bg-green-600 text-white font-bold py-2 px-6 rounded-lg transition-colors">
+                    Start Next Module
+                </button>
+            )}
         </div>
+        <p className="text-sm text-gray-500 dark:text-gray-400 mt-6">You can now close this module to return to the dashboard.</p>
       </div>
     );
   }
 
+  // Render the current quiz question
   return (
     <div className="p-4 sm:p-8 bg-brand-off-white dark:bg-brand-night rounded-lg text-gray-900 dark:text-white">
       <div className="flex justify-between items-center mb-6">
@@ -99,6 +120,7 @@ const Quiz: React.FC<QuizProps> = ({ module, attemptsLeft, onQuizComplete, onRet
         ))}
       </div>
       
+      {/* Feedback section shown after an answer is submitted */}
       {isAnswered && (
         <div className={`mt-6 p-4 rounded-lg flex items-start gap-4 ${isCorrect ? 'bg-green-50 dark:bg-green-900/50' : 'bg-red-50 dark:bg-red-900/50'}`}>
           {isCorrect ? <CheckCircleIcon className="h-6 w-6 text-green-500 dark:text-green-400 mt-1 flex-shrink-0" /> : <XCircleIcon className="h-6 w-6 text-red-500 dark:text-red-400 mt-1 flex-shrink-0" />}

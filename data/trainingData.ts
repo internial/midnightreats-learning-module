@@ -1,6 +1,10 @@
-
 import { ModuleData } from '../types';
 
+/**
+ * This file contains all the static data for the training modules.
+ * Each object in the MODULES array represents a complete module,
+ * including its content, quiz, and metadata.
+ */
 export const MODULES: ModuleData[] = [
   {
     id: 'module-1',
