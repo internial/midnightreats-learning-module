@@ -7,15 +7,16 @@ interface QuizProps {
   attemptsLeft: number;
   onQuizComplete: (score: number) => void;
   onRetry: () => void;
+  onReset: () => void;
   nextModuleId: string | null;
-  onStartNextModule: (moduleId: string) => void;
+  onReturnToDashboard: () => void;
 }
 
 /**
  * Renders an interactive quiz for a given module.
  * Manages question state, answer selection, scoring, and results display.
  */
-const Quiz: React.FC<QuizProps> = ({ module, attemptsLeft, onQuizComplete, onRetry, nextModuleId, onStartNextModule }) => {
+const Quiz: React.FC<QuizProps> = ({ module, attemptsLeft, onQuizComplete, onRetry, onReset, nextModuleId, onReturnToDashboard }) => {
   // State for tracking quiz progress
   const [currentQuestionIndex, setCurrentQuestionIndex] = useState(0);
   const [selectedAnswer, setSelectedAnswer] = useState<string | null>(null);
@@ -76,10 +77,15 @@ const Quiz: React.FC<QuizProps> = ({ module, attemptsLeft, onQuizComplete, onRet
           {score}%
         </p>
         <p className="text-lg text-gray-600 dark:text-gray-300 mb-6">
-          {passed ? 'Congratulations, you passed!' : 'You did not pass this time.'}
+          {passed ? 
+            (nextModuleId ? 'Congratulations, you passed! The next module is now unlocked.' : 'Congratulations! You have completed all training modules.') 
+            : 'You did not pass this time.'}
         </p>
         {!passed && attemptsLeft > 0 && (
           <p className="text-yellow-600 dark:text-yellow-400 mb-6">You have {attemptsLeft} {attemptsLeft === 1 ? 'attempt' : 'attempts'} remaining.</p>
+        )}
+        {!passed && attemptsLeft <= 0 && (
+          <p className="text-red-500 dark:text-red-400 mb-6">You have no attempts remaining for this quiz.</p>
         )}
         <div className="flex justify-center gap-4 flex-wrap">
             {!passed && attemptsLeft > 0 && (
@@ -87,13 +93,20 @@ const Quiz: React.FC<QuizProps> = ({ module, attemptsLeft, onQuizComplete, onRet
                     Retry Quiz
                 </button>
             )}
-             {passed && nextModuleId && (
-                <button onClick={() => onStartNextModule(nextModuleId)} className="bg-green-500 hover:bg-green-600 text-white font-bold py-2 px-6 rounded-lg transition-colors">
-                    Start Next Module
+            {!passed && attemptsLeft <= 0 && (
+                 <button onClick={onReset} className="bg-yellow-500 hover:bg-yellow-600 text-white font-bold py-2 px-6 rounded-lg transition-colors">
+                    Review Material & Retry
+                </button>
+            )}
+             {passed && (
+                <button onClick={onReturnToDashboard} className="bg-green-500 hover:bg-green-600 text-white font-bold py-2 px-6 rounded-lg transition-colors">
+                    Return to Dashboard
                 </button>
             )}
         </div>
-        <p className="text-sm text-gray-500 dark:text-gray-400 mt-6">You can now close this module to return to the dashboard.</p>
+        {!passed && (
+          <p className="text-sm text-gray-500 dark:text-gray-400 mt-6">You can return to the dashboard to review other modules.</p>
+        )}
       </div>
     );
   }

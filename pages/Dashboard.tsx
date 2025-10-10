@@ -29,7 +29,8 @@ const Avatar: React.FC<{ name: string }> = ({ name }) => {
  */
 const Dashboard: React.FC<DashboardProps> = ({ user, onSelectModule, onLogout, onViewCertificate, theme, setTheme }) => {
   // Calculate overall training progress
-  const completedModules = Object.values(user.progress).filter(p => p.status === 'completed').length;
+  // FIX: Changed from Object.values to Object.keys to provide proper type inference for the progress object and resolve the error on `p.status`.
+  const completedModules = Object.keys(user.progress).filter(key => user.progress[key].status === 'completed').length;
   const totalModules = MODULES.length;
   const overallProgress = totalModules > 0 ? Math.round((completedModules / totalModules) * 100) : 0;
   const allModulesCompleted = completedModules === totalModules;

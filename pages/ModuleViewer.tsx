@@ -64,6 +64,18 @@ const ModuleViewer: React.FC<ModuleViewerProps> = ({ user, module, onBack, onUpd
       setShowQuiz(false); 
       setTimeout(() => setShowQuiz(true), 0);
   };
+
+  /**
+   * Resets the quiz attempts for the current module and returns to the content view.
+   */
+  const handleQuizReset = () => {
+      const newUser = { ...user };
+      const newProgress = { ...newUser.progress };
+      newProgress[module.id] = { ...newProgress[module.id], attempts: 0, score: null };
+      newUser.progress = newProgress;
+      onUpdateProgress(newUser);
+      setShowQuiz(false); 
+  };
   
   // Calculate remaining attempts for the quiz
   const attemptsLeft = module.quiz.maxAttempts - progress.attempts;
@@ -106,7 +118,10 @@ const ModuleViewer: React.FC<ModuleViewerProps> = ({ user, module, onBack, onUpd
               )}
                {attemptsLeft <= 0 && progress.status !== 'completed' && (
                  <div className="text-center mt-12 p-4 bg-red-100 dark:bg-red-900/50 rounded-lg">
-                    <p className="text-red-800 dark:text-red-300 font-bold">You have no attempts left for this quiz. Please contact your manager.</p>
+                    <p className="text-red-800 dark:text-red-300 font-bold mb-4">You have no attempts left for this quiz. You can review the material and try again.</p>
+                     <button onClick={handleQuizReset} className="bg-red-500 hover:bg-red-600 text-white font-bold py-2 px-6 rounded-lg transition-colors">
+                        Reset Attempts
+                    </button>
                 </div>
               )}
             </>
@@ -117,8 +132,9 @@ const ModuleViewer: React.FC<ModuleViewerProps> = ({ user, module, onBack, onUpd
               attemptsLeft={attemptsLeft}
               onQuizComplete={handleQuizComplete}
               onRetry={handleRetry}
+              onReset={handleQuizReset}
               nextModuleId={nextModuleId}
-              onStartNextModule={onSelectModule}
+              onReturnToDashboard={onBack}
             />
           )}
         </div>
