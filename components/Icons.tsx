@@ -78,13 +78,6 @@ export const MailIcon: React.FC<{ className?: string }> = ({ className }) => (
     </svg>
 );
 
-// IdentificationIcon: A simple SVG ID card icon.
-export const IdentificationIcon: React.FC<{ className?: string }> = ({ className }) => (
-    <svg xmlns="http://www.w3.org/2000/svg" className={className} fill="none" viewBox="0 0 24 24" stroke="currentColor">
-        <path strokeLinecap="round" strokeLinejoin="round" strokeWidth="2" d="M10 6H5a2 2 0 00-2 2v9a2 2 0 002 2h14a2 2 0 002-2V8a2 2 0 00-2-2h-5m-4 0V5a2 2 0 012-2h4a2 2 0 012 2v1m-4 0h4m-9 4h1m-1 4h1m4-4h1m-1 4h1" />
-    </svg>
-);
-
 // BookOpenIcon: A simple SVG open book icon.
 export const BookOpenIcon: React.FC<{ className?: string }> = ({ className }) => (
     <svg xmlns="http://www.w3.org/2000/svg" className={className} fill="none" viewBox="0 0 24 24" stroke="currentColor">

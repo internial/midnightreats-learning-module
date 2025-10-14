@@ -1,7 +1,7 @@
 import React, { useState } from 'react';
 import { User, UserProgress } from '../types';
 import { MODULES } from '../data/trainingData';
-import { UserIcon, MailIcon, IdentificationIcon, LogoIcon, ThemeToggle } from '../components/Icons';
+import { UserIcon, MailIcon, LogoIcon, ThemeToggle } from '../components/Icons';
 
 interface LoginProps {
   onLogin: (user: User) => void;
@@ -35,16 +35,14 @@ const Login: React.FC<LoginProps> = ({ onLogin, savedUser, theme, setTheme }) =>
   // State for user input fields
   const [name, setName] = useState('');
   const [email, setEmail] = useState('');
-  const [employeeId, setEmployeeId] = useState('');
 
   /** Handles the form submission to create and log in a new user. */
   const handleSubmit = (e: React.FormEvent) => {
     e.preventDefault();
-    if (name && email && employeeId) {
+    if (name && email) {
       const newUser: User = {
         name,
         email,
-        employeeId,
         progress: initializeProgress(),
         lastLogin: Date.now(),
       };
@@ -82,15 +80,6 @@ const Login: React.FC<LoginProps> = ({ onLogin, savedUser, theme, setTheme }) =>
                       <MailIcon className="h-5 w-5 text-gray-400" />
                   </div>
                   <input type="email" id="email" value={email} onChange={(e) => setEmail(e.target.value)} required className="block w-full bg-gray-100 dark:bg-gray-700 border border-gray-300 dark:border-gray-600 rounded-md py-2 pl-10 pr-3 text-gray-900 dark:text-white focus:outline-none focus:ring-brand-blue focus:border-brand-blue" />
-              </div>
-            </div>
-            <div>
-              <label htmlFor="employeeId" className="block text-sm font-medium text-gray-600 dark:text-gray-300">Employee ID</label>
-              <div className="mt-1 relative rounded-md shadow-sm">
-                  <div className="absolute inset-y-0 left-0 pl-3 flex items-center pointer-events-none">
-                      <IdentificationIcon className="h-5 w-5 text-gray-400" />
-                  </div>
-                  <input type="text" id="employeeId" value={employeeId} onChange={(e) => setEmployeeId(e.target.value)} required className="block w-full bg-gray-100 dark:bg-gray-700 border border-gray-300 dark:border-gray-600 rounded-md py-2 pl-10 pr-3 text-gray-900 dark:text-white focus:outline-none focus:ring-brand-blue focus:border-brand-blue" />
               </div>
             </div>
             <button type="submit" className="w-full flex justify-center py-3 px-4 border border-transparent rounded-md shadow-sm text-sm font-medium text-white bg-brand-blue hover:bg-brand-blue-dark focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-offset-brand-off-white dark:focus:ring-offset-brand-night focus:ring-brand-blue transition-colors">

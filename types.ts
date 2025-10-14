@@ -1,4 +1,5 @@
 
+
 /** Defines the possible states for a training module. */
 export type ModuleStatus = 'locked' | 'ready' | 'completed';
 
@@ -15,7 +16,6 @@ export interface UserProgress {
 export interface User {
   name: string;
   email: string;
-  employeeId: string;
   progress: UserProgress;
   lastLogin: number;
 }
