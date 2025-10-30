@@ -112,20 +112,6 @@ export const DownloadIcon: React.FC<{ className?: string }> = ({ className }) =>
     </svg>
 );
 
-// LogoIcon: The company logo as an SVG component.
-export const LogoIcon: React.FC<{ className?: string }> = ({ className }) => (
-    <svg xmlns="http://www.w3.org/2000/svg" className={className} fill="currentColor" viewBox="0 0 256 256">
-        <mask id="mask-chips">
-            <rect width="256" height="256" fill="white" />
-            <circle cx="100" cy="80" r="20" fill="black" />
-            <circle cx="170" cy="110" r="25" fill="black" />
-            <circle cx="120" cy="180" r="18" fill="black" />
-            <circle cx="60" cy="150" r="15" fill="black" />
-        </mask>
-        <circle cx="128" cy="128" r="100" mask="url(#mask-chips)" />
-    </svg>
-);
-
 /**
  * A toggle button component to switch between light and dark themes.
  * @param {{ theme: 'light' | 'dark'; setTheme: (theme: 'light' | 'dark') => void; }} props

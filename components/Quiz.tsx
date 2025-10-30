@@ -53,19 +53,27 @@ const Quiz: React.FC<QuizProps> = ({ module, attemptsLeft, onQuizComplete, onRet
   
   /** Determines the CSS class for an answer button based on its state. */
   const getButtonClass = (option: string) => {
-    if (!isAnswered) {
-        return 'bg-gray-200 dark:bg-gray-700 hover:bg-gray-300 dark:hover:bg-gray-600';
+    // Post-submission styles
+    if (isAnswered) {
+      // Correct answer style
+      if (option === currentQuestion.answer) {
+          return 'bg-green-100 dark:bg-green-500/50 border-green-500';
+      }
+      // Incorrectly selected answer style
+      if (option === selectedAnswer && option !== currentQuestion.answer) {
+          return 'bg-red-100 dark:bg-red-500/50 border-red-500';
+      }
+      // Default style for other options after an answer is submitted
+      return 'bg-gray-200 dark:bg-gray-700 opacity-60 dark:opacity-50';
     }
-    // Correct answer style
-    if (option === currentQuestion.answer) {
-        return 'bg-green-100 dark:bg-green-500/50 border-green-500';
+
+    // Pre-submission styles
+    if (selectedAnswer === option) {
+      return 'bg-brand-blue/20 dark:bg-brand-blue/30 border-brand-blue shadow-md';
     }
-    // Incorrectly selected answer style
-    if (option === selectedAnswer && option !== currentQuestion.answer) {
-        return 'bg-red-100 dark:bg-red-500/50 border-red-500';
-    }
-    // Default style for other options after an answer is submitted
-    return 'bg-gray-200 dark:bg-gray-700 opacity-60 dark:opacity-50';
+    
+    // Default unselected style
+    return 'bg-gray-200 dark:bg-gray-700 hover:bg-gray-300 dark:hover:bg-gray-600';
   };
 
   // Render the results screen when the quiz is finished
@@ -126,7 +134,7 @@ const Quiz: React.FC<QuizProps> = ({ module, attemptsLeft, onQuizComplete, onRet
             key={option}
             onClick={() => !isAnswered && setSelectedAnswer(option)}
             disabled={isAnswered}
-            className={`w-full text-left p-4 rounded-lg border-2 border-transparent transition-all duration-300 ${isAnswered ? 'cursor-not-allowed' : 'cursor-pointer'} ${selectedAnswer === option ? 'border-brand-blue' : ''} ${isAnswered ? getButtonClass(option) : 'bg-gray-200 dark:bg-gray-700 hover:bg-gray-300 dark:hover:bg-gray-600'}`}
+            className={`w-full text-left p-4 rounded-lg border-2 border-transparent transition-all duration-300 ${isAnswered ? 'cursor-not-allowed' : 'cursor-pointer'} ${getButtonClass(option)}`}
           >
             {option}
           </button>

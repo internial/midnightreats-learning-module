@@ -1,7 +1,7 @@
 import React, { useState } from 'react';
 import { User, UserProgress } from '../types';
 import { MODULES } from '../data/trainingData';
-import { UserIcon, MailIcon, LogoIcon, ThemeToggle } from '../components/Icons';
+import { UserIcon, MailIcon, ThemeToggle } from '../components/Icons';
 
 interface LoginProps {
   onLogin: (user: User) => void;
@@ -57,8 +57,9 @@ const Login: React.FC<LoginProps> = ({ onLogin, savedUser, theme, setTheme }) =>
       </div>
       <div className="w-full max-w-md">
         <div className="text-center mb-8">
-            <LogoIcon className="w-32 h-32 text-brand-blue mx-auto" />
-            <h1 className="text-brand-blue mt-4 text-2xl font-semibold">New Hire Onboarding</h1>
+            <img src="https://hang-prod-218598721.imgix.net/live/nft_loyalty_programs/images/000/000/492/normal/ee509_Logo_Brick.png" alt="Midnight Treats Logo" className="w-40 h-auto mx-auto" />
+            <h1 className="text-brand-blue mt-4 text-3xl font-bold tracking-wider">New Hire Onboarding</h1>
+            <p className="text-gray-500 dark:text-gray-400 mt-1">Welcome to the team!</p>
         </div>
 
         <div className="bg-brand-off-white dark:bg-brand-night shadow-2xl rounded-xl p-8">

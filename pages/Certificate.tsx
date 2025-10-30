@@ -1,6 +1,6 @@
 import React, { useState } from 'react';
 import { User } from '../types';
-import { ArrowLeftIcon, DownloadIcon, LogoIcon } from '../components/Icons';
+import { ArrowLeftIcon, DownloadIcon } from '../components/Icons';
 import { pdfService } from '../services/pdfService';
 
 
@@ -29,7 +29,7 @@ const Certificate: React.FC<CertificateProps> = ({ user, onBack }) => {
     /** Handles the PDF download process. */
     const handleDownload = async () => {
         setIsDownloading(true);
-        await pdfService.downloadCertificate(CERTIFICATE_ID, `${user.name}_MidnightTreats_Certificate`);
+        await pdfService.downloadCertificate(CERTIFICATE_ID, `${user.name}_MidnighTreats_Certificate`);
         setIsDownloading(false);
     };
 
@@ -48,12 +48,12 @@ const Certificate: React.FC<CertificateProps> = ({ user, onBack }) => {
                    <div className="absolute inset-4 border-2 border-brand-blue"></div>
                    
                    <div className="relative z-10 flex flex-col items-center justify-center h-full text-center">
-                      <LogoIcon className="w-32 h-32 text-brand-blue mb-4" />
+                      <img src="https://hang-prod-218598721.imgix.net/live/nft_loyalty_programs/images/000/000/492/normal/ee509_Logo_Brick.png" alt="Midnight Treats Logo" className="w-40 h-auto mb-4" />
                       <h1 className="text-xl sm:text-2xl font-bold text-gray-600 tracking-widest uppercase">Certificate of Completion</h1>
                       <p className="text-lg sm:text-xl mt-4">This certifies that</p>
                       <p className="text-3xl sm:text-5xl font-bold text-brand-blue my-4">{user.name}</p>
                       <p className="text-lg sm:text-xl">has successfully completed the</p>
-                      <p className="text-2xl sm:text-3xl font-semibold text-gray-700 mt-2">Midnight Treats New Hire Onboarding Program</p>
+                      <p className="text-2xl sm:text-3xl font-semibold text-gray-700 mt-2">MidnighTreats New Hire Onboarding Program</p>
                       <div className="mt-8 border-t-2 border-gray-300 w-1/2 mx-auto pt-4">
                         <p className="text-sm text-gray-500">Completed on: {completionDate}</p>
                       </div>

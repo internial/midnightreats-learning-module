@@ -39,13 +39,7 @@ const Dashboard: React.FC<DashboardProps> = ({ user, onSelectModule, onLogout, o
     <div className="min-h-screen bg-brand-light dark:bg-brand-dark text-gray-900 dark:text-white p-4 sm:p-8 font-sans">
       <div className="max-w-7xl mx-auto">
         <header className="flex justify-between items-center mb-8">
-          <div className="flex items-center gap-4">
-            <Avatar name={user.name} />
-            <div>
-              <h1 className="text-2xl sm:text-3xl font-bold">Welcome, {user.name.split(' ')[0]}!</h1>
-              <p className="text-gray-600 dark:text-gray-400">Your training dashboard</p>
-            </div>
-          </div>
+           <img src="https://hang-prod-218598721.imgix.net/live/nft_loyalty_programs/images/000/000/492/normal/ee509_Logo_Brick.png" alt="Midnight Treats Logo" className="w-28 h-auto" />
            <div className="flex items-center gap-4">
             <ThemeToggle theme={theme} setTheme={setTheme} />
             <button onClick={onLogout} className="flex items-center gap-2 text-gray-500 dark:text-gray-400 hover:text-gray-900 dark:hover:text-white transition-colors">
@@ -54,6 +48,14 @@ const Dashboard: React.FC<DashboardProps> = ({ user, onSelectModule, onLogout, o
             </button>
           </div>
         </header>
+
+        <div className="flex items-center gap-4 mb-8">
+          <Avatar name={user.name} />
+          <div>
+            <h1 className="text-2xl sm:text-3xl font-bold">Welcome, {user.name.split(' ')[0]}!</h1>
+            <p className="text-gray-600 dark:text-gray-400">Your training dashboard</p>
+          </div>
+        </div>
 
         <div className="bg-brand-off-white dark:bg-brand-night rounded-xl p-6 mb-8 shadow-md">
           <div className="flex justify-between items-center mb-2">
