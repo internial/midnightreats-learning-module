@@ -43,19 +43,19 @@ const Certificate: React.FC<CertificateProps> = ({ user, onBack }) => {
                 </button>
                 
                 {/* The visual certificate element */}
-                <div id={CERTIFICATE_ID} className="bg-white text-gray-800 p-8 sm:p-12 aspect-[1.414/1] relative overflow-hidden shadow-2xl">
-                   <div className="absolute inset-0 border-[12px] border-brand-blue"></div>
-                   <div className="absolute inset-4 border-2 border-brand-blue"></div>
+                <div id={CERTIFICATE_ID} className="bg-white text-gray-800 p-4 sm:p-8 md:p-12 aspect-[1.414/1] relative overflow-hidden shadow-2xl">
+                   <div className="absolute inset-0 border-[8px] sm:border-[12px] border-brand-blue"></div>
+                   <div className="absolute inset-2 sm:inset-4 border-2 border-brand-blue"></div>
                    
                    <div className="relative z-10 flex flex-col items-center justify-center h-full text-center">
-                      <img src="https://hang-prod-218598721.imgix.net/live/nft_loyalty_programs/images/000/000/492/normal/ee509_Logo_Brick.png" alt="Midnight Treats Logo" className="w-40 h-auto mb-4" />
-                      <h1 className="text-xl sm:text-2xl font-bold text-gray-600 tracking-widest uppercase">Certificate of Completion</h1>
-                      <p className="text-lg sm:text-xl mt-4">This certifies that</p>
-                      <p className="text-3xl sm:text-5xl font-bold text-brand-blue my-4">{user.name}</p>
-                      <p className="text-lg sm:text-xl">has successfully completed the</p>
-                      <p className="text-2xl sm:text-3xl font-semibold text-gray-700 mt-2">MidnighTreats New Hire Onboarding Program</p>
-                      <div className="mt-8 border-t-2 border-gray-300 w-1/2 mx-auto pt-4">
-                        <p className="text-sm text-gray-500">Completed on: {completionDate}</p>
+                      <img src="https://hang-prod-218598721.imgix.net/live/nft_loyalty_programs/images/000/000/492/normal/ee509_Logo_Brick.png" alt="Midnight Treats Logo" className="w-24 sm:w-32 md:w-40 h-auto mb-2 sm:mb-4" />
+                      <h1 className="text-lg sm:text-xl md:text-2xl font-bold text-gray-600 tracking-normal sm:tracking-widest uppercase">Certificate of Completion</h1>
+                      <p className="text-base sm:text-lg md:text-xl mt-2 sm:mt-4">This certifies that</p>
+                      <p className="text-2xl sm:text-4xl md:text-5xl font-bold text-brand-blue my-2 sm:my-4 break-words">{user.name}</p>
+                      <p className="text-base sm:text-lg md:text-xl">has successfully completed the</p>
+                      <p className="text-xl sm:text-2xl md:text-3xl font-semibold text-gray-700 mt-2">MidnighTreats New Hire Onboarding Program</p>
+                      <div className="mt-4 sm:mt-8 border-t-2 border-gray-300 w-1/2 mx-auto pt-2 sm:pt-4">
+                        <p className="text-xs sm:text-sm text-gray-500">Completed on: {completionDate}</p>
                       </div>
                    </div>
                 </div>
