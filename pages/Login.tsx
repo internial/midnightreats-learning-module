@@ -1,7 +1,7 @@
 import React, { useState } from 'react';
 import { User, UserProgress } from '../types';
 import { MODULES } from '../data/trainingData';
-import { UserIcon, MailIcon, ThemeToggle } from '../components/Icons';
+import { UserIcon, MailIcon, ThemeToggle, LockClosedIcon } from '../components/Icons';
 
 interface LoginProps {
   onLogin: (user: User) => void;
@@ -35,10 +35,19 @@ const Login: React.FC<LoginProps> = ({ onLogin, savedUser, theme, setTheme }) =>
   // State for user input fields
   const [name, setName] = useState('');
   const [email, setEmail] = useState('');
+  const [password, setPassword] = useState('');
+  const [error, setError] = useState('');
 
   /** Handles the form submission to create and log in a new user. */
   const handleSubmit = (e: React.FormEvent) => {
     e.preventDefault();
+    setError('');
+
+    if (password !== 'cookie1') {
+      setError('Incorrect password. Please try again.');
+      return;
+    }
+
     if (name && email) {
       const newUser: User = {
         name,
@@ -82,6 +91,16 @@ const Login: React.FC<LoginProps> = ({ onLogin, savedUser, theme, setTheme }) =>
                   </div>
                   <input type="email" id="email" value={email} onChange={(e) => setEmail(e.target.value)} required className="block w-full bg-gray-100 dark:bg-gray-700 border border-gray-300 dark:border-gray-600 rounded-md py-2 pl-10 pr-3 text-gray-900 dark:text-white focus:outline-none focus:ring-brand-blue focus:border-brand-blue" />
               </div>
+            </div>
+            <div>
+              <label htmlFor="password" className="block text-sm font-medium text-gray-600 dark:text-gray-300">Password</label>
+              <div className="mt-1 relative rounded-md shadow-sm">
+                  <div className="absolute inset-y-0 left-0 pl-3 flex items-center pointer-events-none">
+                      <LockClosedIcon className="h-5 w-5 text-gray-400" />
+                  </div>
+                  <input type="password" id="password" value={password} onChange={(e) => setPassword(e.target.value)} required className="block w-full bg-gray-100 dark:bg-gray-700 border border-gray-300 dark:border-gray-600 rounded-md py-2 pl-10 pr-3 text-gray-900 dark:text-white focus:outline-none focus:ring-brand-blue focus:border-brand-blue" />
+              </div>
+               {error && <p className="mt-2 text-sm text-red-600 dark:text-red-400 text-center">{error}</p>}
             </div>
             <button type="submit" className="w-full flex justify-center py-3 px-4 border border-transparent rounded-md shadow-sm text-sm font-medium text-white bg-brand-blue hover:bg-brand-blue-dark focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-offset-brand-off-white dark:focus:ring-offset-brand-night focus:ring-brand-blue transition-colors">
               Start Training
