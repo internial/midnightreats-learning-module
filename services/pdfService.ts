@@ -21,7 +21,8 @@ export const pdfService = {
 
     try {
       // Use html2canvas to capture the element. Scale improves resolution.
-      const canvas = await html2canvas(certificateElement, { scale: 2 });
+      // Added useCORS: true to handle the cross-origin logo image.
+      const canvas = await html2canvas(certificateElement, { scale: 2, useCORS: true });
       const imgData = canvas.toDataURL('image/png');
       const { jsPDF } = jspdf;
       
