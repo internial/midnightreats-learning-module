@@ -1,7 +1,7 @@
 import React, { useState } from 'react';
 import { User, UserProgress } from '../types';
 import { MODULES } from '../data/trainingData';
-import { UserIcon, MailIcon, ThemeToggle, LockClosedIcon } from '../components/Icons';
+import { UserIcon, ThemeToggle, LockClosedIcon } from '../components/Icons';
 
 interface LoginProps {
   onLogin: (user: User) => void;
@@ -34,7 +34,6 @@ const initializeProgress = (): UserProgress => {
 const Login: React.FC<LoginProps> = ({ onLogin, savedUser, theme, setTheme }) => {
   // State for user input fields
   const [name, setName] = useState('');
-  const [email, setEmail] = useState('');
   const [password, setPassword] = useState('');
   const [error, setError] = useState('');
 
@@ -48,10 +47,9 @@ const Login: React.FC<LoginProps> = ({ onLogin, savedUser, theme, setTheme }) =>
       return;
     }
 
-    if (name && email) {
+    if (name) {
       const newUser: User = {
         name,
-        email,
         progress: initializeProgress(),
         lastLogin: Date.now(),
       };
@@ -81,15 +79,6 @@ const Login: React.FC<LoginProps> = ({ onLogin, savedUser, theme, setTheme }) =>
                       <UserIcon className="h-5 w-5 text-gray-400" />
                   </div>
                   <input type="text" id="name" value={name} onChange={(e) => setName(e.target.value)} required className="block w-full bg-gray-100 dark:bg-gray-700 border border-gray-300 dark:border-gray-600 rounded-md py-2 pl-10 pr-3 text-gray-900 dark:text-white focus:outline-none focus:ring-brand-blue focus:border-brand-blue" />
-              </div>
-            </div>
-            <div>
-              <label htmlFor="email" className="block text-sm font-medium text-gray-600 dark:text-gray-300">Email</label>
-              <div className="mt-1 relative rounded-md shadow-sm">
-                  <div className="absolute inset-y-0 left-0 pl-3 flex items-center pointer-events-none">
-                      <MailIcon className="h-5 w-5 text-gray-400" />
-                  </div>
-                  <input type="email" id="email" value={email} onChange={(e) => setEmail(e.target.value)} required className="block w-full bg-gray-100 dark:bg-gray-700 border border-gray-300 dark:border-gray-600 rounded-md py-2 pl-10 pr-3 text-gray-900 dark:text-white focus:outline-none focus:ring-brand-blue focus:border-brand-blue" />
               </div>
             </div>
             <div>

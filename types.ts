@@ -15,7 +15,6 @@ export interface UserProgress {
 /** Represents the application user. */
 export interface User {
   name: string;
-  email: string;
   progress: UserProgress;
   lastLogin: number;
 }
